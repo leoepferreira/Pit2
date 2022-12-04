@@ -99,6 +99,21 @@ class _PaginaInicialWidgetState extends State<PaginaInicialWidget> {
                     ),
                   ],
                 ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                      child: Text(
+                        'Esta é uma aplicação fictícia com o intuito\nde simular o funcionamento de um app de\ndelivery de uma loja de cupcakes.',
+                        textAlign: TextAlign.center,
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ],

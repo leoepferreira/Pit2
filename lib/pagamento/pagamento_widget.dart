@@ -193,16 +193,19 @@ class _PagamentoWidgetState extends State<PagamentoWidget> {
                                   radioButtonValue!);
                             },
                             optionHeight: 30,
-                            textStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                    ),
+                            textStyle: FlutterFlowTheme.of(context)
+                                .bodyText1
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  fontSize: 16,
+                                ),
                             buttonPosition: RadioButtonPosition.left,
                             direction: Axis.vertical,
                             radioButtonColor: Colors.blue,
-                            inactiveRadioButtonColor: Color(0x8A000000),
+                            inactiveRadioButtonColor:
+                                FlutterFlowTheme.of(context).primaryText,
                             toggleable: false,
                             horizontalAlignment: WrapAlignment.start,
                             verticalAlignment: WrapCrossAlignment.start,
@@ -295,9 +298,13 @@ class _PagamentoWidgetState extends State<PagamentoWidget> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                  maxLines: 2,
-                                  keyboardType: TextInputType.number,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        lineHeight: 4,
+                                      ),
+                                  maxLines: null,
                                 ),
                               ),
                             ),

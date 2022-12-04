@@ -90,7 +90,7 @@ class _CarrinhoWidgetState extends State<CarrinhoWidget> {
                     'LIMPAR',
                     style: FlutterFlowTheme.of(context).bodyText1.override(
                           fontFamily: 'Poppins',
-                          color: Color(0xFF740F0F),
+                          color: Color(0xFFF32424),
                           fontWeight: FontWeight.w600,
                         ),
                   ),
@@ -435,7 +435,7 @@ class _CarrinhoWidgetState extends State<CarrinhoWidget> {
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   'Resumo de Valores',
@@ -449,186 +449,212 @@ class _CarrinhoWidgetState extends State<CarrinhoWidget> {
                               ],
                             ),
                             Expanded(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 10, 10, 10),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Subtotal',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 12,
-                                              ),
-                                        ),
-                                        StreamBuilder<List<ProdutoVendaRecord>>(
-                                          stream: queryProdutoVendaRecord(
-                                            queryBuilder: (produtoVendaRecord) =>
-                                                produtoVendaRecord.where(
-                                                    'usuario',
-                                                    isEqualTo:
-                                                        currentUserReference),
-                                          ),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 50,
-                                                  height: 50,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    color: Color(0xFF9839EF),
-                                                  ),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10, 10, 10, 10),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Subtotal',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: 12,
                                                 ),
+                                          ),
+                                          StreamBuilder<
+                                              List<ProdutoVendaRecord>>(
+                                            stream: queryProdutoVendaRecord(
+                                              queryBuilder: (produtoVendaRecord) =>
+                                                  produtoVendaRecord.where(
+                                                      'usuario',
+                                                      isEqualTo:
+                                                          currentUserReference),
+                                            ),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 50,
+                                                    height: 50,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: Color(0xFF9839EF),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              List<ProdutoVendaRecord>
+                                                  textSubtotalProdutoVendaRecordList =
+                                                  snapshot.data!;
+                                              return Text(
+                                                formatNumber(
+                                                  functions.subtotalCarrinho(
+                                                      textSubtotalProdutoVendaRecordList
+                                                          .toList(),
+                                                      FFAppState()
+                                                          .produtosVendaLocal
+                                                          .toList()),
+                                                  formatType:
+                                                      FormatType.decimal,
+                                                  decimalType:
+                                                      DecimalType.automatic,
+                                                  currency: 'R\$ ',
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize: 12,
+                                                        ),
                                               );
-                                            }
-                                            List<ProdutoVendaRecord>
-                                                textSubtotalProdutoVendaRecordList =
-                                                snapshot.data!;
-                                            return Text(
-                                              formatNumber(
-                                                functions.subtotalCarrinho(
-                                                    textSubtotalProdutoVendaRecordList
-                                                        .toList(),
-                                                    FFAppState()
-                                                        .produtosVendaLocal
-                                                        .toList()),
-                                                formatType: FormatType.decimal,
-                                                decimalType:
-                                                    DecimalType.automatic,
-                                                currency: 'R\$ ',
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10, 10, 10, 10),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Taxa de Entrega',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: 12,
+                                                ),
+                                          ),
+                                          Text(
+                                            formatNumber(
+                                              FFAppState().taxaDeEntrega,
+                                              formatType: FormatType.decimal,
+                                              decimalType:
+                                                  DecimalType.automatic,
+                                              currency: 'R\$ ',
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: 12,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10, 10, 10, 10),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 10),
+                                              child: Text(
+                                                'Total',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize: 12,
+                                                        ),
                                               ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 0, 10),
+                                            child: StreamBuilder<
+                                                List<ProdutoVendaRecord>>(
+                                              stream: queryProdutoVendaRecord(
+                                                queryBuilder: (produtoVendaRecord) =>
+                                                    produtoVendaRecord.where(
+                                                        'usuario',
+                                                        isEqualTo:
+                                                            currentUserReference),
+                                              ),
+                                              builder: (context, snapshot) {
+                                                // Customize what your widget looks like when it's loading.
+                                                if (!snapshot.hasData) {
+                                                  return Center(
+                                                    child: SizedBox(
+                                                      width: 50,
+                                                      height: 50,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color:
+                                                            Color(0xFF9839EF),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                                List<ProdutoVendaRecord>
+                                                    textProdutoVendaRecordList =
+                                                    snapshot.data!;
+                                                return Text(
+                                                  formatNumber(
+                                                    functions.totalCarrinho(
+                                                        textProdutoVendaRecordList
+                                                            .toList(),
+                                                        FFAppState()
+                                                            .produtosVendaLocal
+                                                            .toList(),
+                                                        FFAppState()
+                                                            .taxaDeEntrega),
+                                                    formatType:
+                                                        FormatType.decimal,
+                                                    decimalType:
+                                                        DecimalType.automatic,
+                                                    currency: 'R\$ ',
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
                                                       .bodyText1
                                                       .override(
                                                         fontFamily: 'Poppins',
                                                         fontSize: 12,
                                                       ),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 10, 10, 10),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Taxa de Entrega',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 12,
-                                              ),
-                                        ),
-                                        Text(
-                                          formatNumber(
-                                            FFAppState().taxaDeEntrega,
-                                            formatType: FormatType.decimal,
-                                            decimalType: DecimalType.automatic,
-                                            currency: 'R\$ ',
+                                                );
+                                              },
+                                            ),
                                           ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 12,
-                                              ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 10, 10, 10),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Total',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 12,
-                                              ),
-                                        ),
-                                        StreamBuilder<List<ProdutoVendaRecord>>(
-                                          stream: queryProdutoVendaRecord(
-                                            queryBuilder: (produtoVendaRecord) =>
-                                                produtoVendaRecord.where(
-                                                    'usuario',
-                                                    isEqualTo:
-                                                        currentUserReference),
-                                          ),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 50,
-                                                  height: 50,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    color: Color(0xFF9839EF),
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            List<ProdutoVendaRecord>
-                                                textProdutoVendaRecordList =
-                                                snapshot.data!;
-                                            return Text(
-                                              formatNumber(
-                                                functions.totalCarrinho(
-                                                    textProdutoVendaRecordList
-                                                        .toList(),
-                                                    FFAppState()
-                                                        .produtosVendaLocal
-                                                        .toList(),
-                                                    FFAppState().taxaDeEntrega),
-                                                formatType: FormatType.decimal,
-                                                decimalType:
-                                                    DecimalType.automatic,
-                                                currency: 'R\$ ',
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: 12,
-                                                      ),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10, 15, 10, 15),
                               child: StreamBuilder<List<ProdutoVendaRecord>>(
                                 stream: queryProdutoVendaRecord(
                                   queryBuilder: (produtoVendaRecord) =>
