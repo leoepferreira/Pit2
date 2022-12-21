@@ -1,3 +1,7 @@
+# Projeto de Integração Transversal em Ciência da Computação
+- App loja de cupcakes
+- Criado em Flutter pelo FrameWork FlutterFlow
+
 # AppPit2
 
 A new Flutter project.
